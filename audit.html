@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living It Up - Google Ads Strategic Performance Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #162642 0%, #1a2d4f 100%);
+            color: white;
+            line-height: 1.5;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            page-break-after: always;
+        }
+        
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            height: 60px;
+        }
+        
+        .slide-number {
+            background: #cc5b27;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .main-title {
+            font-size: 3.2em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #cc5b27, #ff7c4c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.4em;
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #cc5b27;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #cc5b27;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-number {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #cc5b27;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #cc5b27, #ff7c4c);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .highlight-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .warning-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+        
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+        
+        .data-table {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th {
+            background: #cc5b27;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .data-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .performance-table {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .performance-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .performance-table th {
+            background: #2c3e50;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: left;
+        }
+        
+        .performance-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+        }
+        
+        .current { background: #e74c3c; color: white; font-weight: bold; text-align: center; }
+        .month1 { background: #2196F3; color: white; font-weight: bold; text-align: center; }
+        .month3 { background: #4CAF50; color: white; font-weight: bold; text-align: center; }
+        
+        .bullet-points {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .bullet-points li {
+            margin: 12px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 14px;
+        }
+        
+        .bullet-points li:before {
+            content: "▶";
+            color: #cc5b27;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .competitor-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(204, 91, 39, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .tier-box {
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .tier-title {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .roi-visual {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .roi-box {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            flex: 1;
+            margin: 0 8px;
+        }
+        
+        .arrow {
+            font-size: 1.8em;
+            color: #cc5b27;
+        }
+
+        @media print {
+            .slide { page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://res.cloudinary.com/dcnabm5nc/image/upload/v1754585626/lead-guru-new-logo-W-450_oyvumx.webp" alt="Lead Guru Logo" class="logo">
+            <div class="slide-number">01</div>
+        </div>
+        <div class="main-title">Living It Up Google Ads</div>
+        <div class="subtitle">Strategic Performance Analysis & Competitive Intelligence Report</div>
+        
+        <div class="warning-box">
+            <h3>⚠️ CRITICAL: Urgent Optimization Required</h3>
+            <p>Current Performance: £109.65 CPA (4X above breakeven) • 0.12% CVR (80% below target)<br>
+            Immediate action needed to prevent continued budget waste</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">£5,443</span>
+                <div class="stat-label">Current Monthly Spend</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" style="color: #e74c3c;">47</span>
+                <div class="stat-label">Current Conversions (Critical Low)</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" style="color: #e74c3c;">£109.65</span>
+                <div class="stat-label">Current CPA (4X Breakeven)</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">£3,010</span>
+                <div class="stat-label">Customer LTV</div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <div style="font-size: 1.1em; margin-top: 20px;">Analysis Period: <strong>Last 30 Days (Sep 18 - Oct 17, 2025)</strong></div>
+            <div style="opacity: 0.8; margin-top: 8px;">Current: 0.12% CVR | 1.11% CTR | 70% Close Rate | 13% Profit Margin</div>
+            <div style="color: #e74c3c; font-weight: bold; margin-top: 10px;">Breakeven Targets: £27.40 CPA | £273.95 CPL | £0.82 CPC</div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Current Performance Crisis Analysis -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://res.cloudinary.com/dcnabm5nc/image/upload/v1754585626/lead-guru-new-logo-W-450_oyvumx.webp" alt="Lead Guru Logo" class="logo">
+            <div class="slide-number">02</div>
+        </div>
+        <div class="section-title">Current Baseline Performance - Critical Issues Identified</div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">£5,443</span>
+                <div class="stat-label">Monthly Ad Spend</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" style="color: #e74c3c;">47</span>
+                <div class="stat-label">Total Conversions (Critically Low)</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" style="color: #e74c3c;">0.12%</span>
+                <div class="stat-label">Conversion Rate (80% Below Target)</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" style="color: #FFC107;">1.11%</span>
+                <div class="stat-label">Click-Through Rate</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" style="color: #e74c3c;">£109.65</span>
+                <div class="stat-label">Cost Per Conversion (300% Over Target)</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">7.25X</span>
+                <div class="stat-label">Current ROAS</div>
+            </div>
+        </div>
+
+        <div class="performance-table">
+            <table>
+                <tr>
+                    <th>Traffic & Conversion Metrics</th>
+                    <th>Current Volume</th>
+                    <th>Rate/Cost</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td><strong>Impressions</strong></td>
+                    <td>3,528,529</td>
+                    <td>-</td>
+                    <td style="color: #4CAF50;">✓ High Volume</td>
+                </tr>
+                <tr>
+                    <td><strong>Clicks</strong></td>
+                    <td>39,167</td>
+                    <td style="color: #FFC107;">1.11% CTR</td>
+                    <td style="color: #FFC107;">⚠ Below Average</td>
+                </tr>
+                <tr>
+                    <td><strong>Average CPC</strong></td>
+                    <td>-</td>
+                    <td style="color: #4CAF50;">£0.14</td>
+                    <td style="color: #4CAF50;">✓ Good CPC</td>
+                </tr>
+                <tr>
+                    <td><strong>Add to Carts (Conversions)</strong></td>
+                    <td style="color: #e74c3c;">47</td>
+                    <td style="color: #e74c3c;">0.12% CVR</td>
+                    <td style="color: #e74c3c;">✗ Critical Issue</td>
+                </tr>
+                <tr>
+                    <td><strong>Cost Per Conversion</strong></td>
+                    <td>-</td>
+                    <td style="color: #e74c3c;">£109.65</td>
+                    <td style="color: #e74c3c;">✗ 300% Over Target</td>
+                </tr>
+                <tr style="background: rgba(76, 175, 80, 0.2);">
+                    <td><strong>Sales (70% close rate)</strong></td>
+                    <td>33</td>
+                    <td>-</td>
+                    <td>From Conversions</td>
+                </tr>
+                <tr style="background: rgba(76, 175, 80, 0.2);">
+                    <td><strong>Cost Per Sale</strong></td>
+                    <td>-</td>
+                    <td style="color: #e74c3c;">£165.45</td>
+                    <td style="color: #e74c3c;">✗ Below Breakeven</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="warning-box">
+            <h3>Critical Performance Issues Identified</h3>
+            <p><strong>Revenue: £39,463 | Profit: £5,130 | ROI: 94%</strong><br>
+            <strong>PRIMARY ISSUE:</strong> 0.12% CVR is 80% below 0.60% target - landing page, offer, or traffic quality crisis<br>
+            <strong>COST IMPACT:</strong> £109.65 CPA is 300% above £27.40 breakeven - losing money on every conversion</p>
+        </div>
+    </div>
+
+    <!-- Slide 3: Root Cause Analysis -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://res.cloudinary.com/dcnabm5nc/image/upload/v1754585626/lead-guru-new-logo-W-450_oyvumx.webp" alt="Lead Guru Logo" class="logo">
+            <div class="slide-number">03</div>
+        </div>
+        <div class="section-title">Root Cause Analysis - Why Performance is Failing</div>
+        
+        <div class="three-column">
+            <div class="competitor-section">
+                <h4 style="color: #e74c3c; margin-bottom: 15px;">🔴 Traffic Quality Issues</h4>
+                <div style="font-size: 13px; margin-bottom: 15px;">
+                    <strong>Symptoms:</strong><br>
+                    • 39,167 clicks but only 47 conversions<br>
+                    • 0.12% CVR (should be 0.60%+)<br>
+                    • High impressions, low CTR (1.11%)<br><br>
+                    
+                    <strong>Root Causes:</strong><br>
+                    • Wrong keywords attracting browsers, not buyers<br>
+                    • Broad match wasting budget on irrelevant terms<br>
+                    • No negative keywords filtering out poor traffic<br>
+                    • Weak ad copy not pre-qualifying visitors<br><br>
+                    
+                    <strong>Impact:</strong><br>
+                    • Paying for 39,000+ clicks from people who won't buy<br>
+                    • CPA inflated to £109.65 (4X breakeven)
+                </div>
+            </div>
+            
+            <div class="competitor-section">
+                <h4 style="color: #e74c3c; margin-bottom: 15px;">🔴 Landing Page Crisis</h4>
+                <div style="font-size: 13px; margin-bottom: 15px;">
+                    <strong>Symptoms:</strong><br>
+                    • Traffic arriving but not converting<br>
+                    • 99.88% of clicks leave without adding to cart<br>
+                    • High cost per conversion<br><br>
+                    
+                    <strong>Root Causes:</strong><br>
+                    • Landing page doesn't match ad message<br>
+                    • Unclear value proposition or call-to-action<br>
+                    • Poor mobile experience (likely issue)<br>
+                    • Missing trust signals & social proof<br>
+                    • Friction in checkout process<br><br>
+                    
+                    <strong>Impact:</strong><br>
+                    • 99.88% bounce/exit rate on landing page<br>
+                    • £5,443 spent mostly on wasted traffic
+                </div>
+            </div>
+            
+            <div class="competitor-section">
+                <h4 style="color: #e74c3c; margin-bottom: 15px;">🔴 Account Structure Chaos</h4>
+                <div style="font-size: 13px; margin-bottom: 15px;">
+                    <strong>Symptoms:</strong><br>
+                    • Low CTR (1.11%) indicating poor relevance<br>
+                    • No campaign segmentation visible<br>
+                    • Budget bleeding across poor performers<br><br>
+                    
+                    <strong>Root Causes:</strong><br>
+                    • Single campaign or poorly segmented campaigns<br>
+                    • No brand defense on "cocoon" terms<br>
+                    • High-intent and low-intent mixed together<br>
+                    • No bid strategy optimization per segment<br><br>
+                    
+                    <strong>Impact:</strong><br>
+                    • Can't identify winners vs losers<br>
+                    • Budget waste on underperforming segments<br>
+                    • Missing brand traffic opportunities
+                </div>
+            </div>
+        </div>
+
+        <div class="warning-box" style="margin-top: 25px;">
+            <h3>The £109.65 CPA Crisis Explained</h3>
+            <p><strong>Breakeven CPA: £27.40 (based on 70% close rate, £391.36 breakeven cost per sale, 13% margin)</strong><br>
+            <strong>Current CPA: £109.65 = 300% over breakeven = losing money on every conversion</strong><br><br>
+            
+            To hit breakeven, you need either:<br>
+            1) Reduce CPA from £109.65 to £27.40 (75% reduction) OR<br>
+            2) Increase CVR from 0.12% to 0.50%+ (317% improvement) OR<br>
+            3) Combination of both through comprehensive optimization</p>
+        </div>
+    </div>
+
+    <!-- Slide 4: Competitive Landscape -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://res.cloudinary.com/dcnabm5nc/image/upload/v1754585626/lead-guru-new-logo-W-450_oyvumx.webp" alt="Lead Guru Logo" class="logo">
+            <div class="slide-number">04</div>
+        </div>
+        <div class="section-title">Competitive Intelligence & Market Opportunities</div>
+        
+        <div class="three-column">
+            <div class="competitor-section">
+                <h4 style="color: #cc5b27; margin-bottom: 15px;">Swyft Home</h4>
+                <div style="color: #4CAF50; font-weight: bold; margin-bottom: 10px;">Eco-Friendly Premium Position</div>
+                <div style="font-size: 12px; margin-bottom: 15px;">
+                    <strong>Their Strategy:</strong> Sustainability-first messaging, premium pricing, modern aesthetic<br>
+                    <strong>Keywords:</strong> "eco sofa bed", sustainable furniture<br>
+                    <strong>Weakness:</strong> Higher prices, limited range<br><br>
+                    
+                    <strong>How to Beat Them:</strong><br>
+                    • Match on quality, undercut on price<br>
+                    • Emphasize "quality you can afford"<br>
+                    • Target price-conscious eco buyers<br>
+                    • Broader product selection advantage
+                </div>
+            </div>
+            
+            <div class="competitor-section">
+                <h4 style="color: #cc5b27; margin-bottom: 15px;">Sofa Bed Expert</h4>
+                <div style="color: #FFC107; font-weight: bold; margin-bottom: 10px;">Specialist Authority Positioning</div>
+                <div style="font-size: 12px; margin-bottom: 15px;">
+                    <strong>Their Strategy:</strong> Expert guides, reviews, buying advice<br>
+                    <strong>Keywords:</strong> "best sofa beds", comparison content<br>
+                    <strong>Weakness:</strong> Less brand recognition<br><br>
+                    
+                    <strong>How to Beat Them:</strong><br>
+                    • Steal "best sofa beds" keywords<br>
+                    • Create own buying guides with your products<br>
+                    • Build authority through content<br>
+                    • Use customer reviews as proof
+                </div>
+            </div>
+            
+            <div class="competitor-section">
+                <h4 style="color: #cc5b27; margin-bottom: 15px;">IKEA / Wayfair</h4>
+                <div style="color: #2196F3; font-weight: bold; margin-bottom: 10px;">Mass Market Volume Leaders</div>
+                <div style="font-size: 12px; margin-bottom: 15px;">
+                    <strong>Their Strategy:</strong> Low prices, massive selection, fast delivery<br>
+                    <strong>Keywords:</strong> "sofa bed ikea", broad generic terms<br>
+                    <strong>Weakness:</strong> Generic quality, no specialization<br><br>
+                    
+                    <strong>How to Beat Them:</strong><br>
+                    • "Better quality than IKEA, fairer price than boutique"<br>
+                    • Target "comfortable everyday use" keywords<br>
+                    • Emphasize British craftsmanship<br>
+                    • Highlight durability vs cheap alternatives
+                </div>
+            </div>
+        </div>
+
+        <div class="tier-box" style="margin-top: 25px;">
+            <div class="tier-title">🎯 YOUR COMPETITIVE ADVANTAGE</div>
+            <div style="font-size: 14px;">
+                <strong>Sweet Spot Positioning:</strong> Premium quality at accessible prices - between IKEA (cheap/generic) and Swyft (premium/expensive)<br><br>
+                
+                <strong>Key Differentiators to Emphasize:</strong><br>
+                • Comfort for everyday use (not just occasional guests)<br>
+                • Space-saving innovation (small UK homes need this)<br>
+                • British craftsmanship & quality materials<br>
+                • Fair pricing without premium markup<br>
+                • Actual sleep comfort, not just "sofa that opens"<br><br>
+                
+                <strong>Messaging Strategy:</strong> "Finally, a sofa bed comfortable enough to sleep on every night - without the premium price tag"
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Strategic Keyword Opportunities -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://res.cloudinary.com/dcnabm5nc/image/upload/v1754585626/lead-guru-new-logo-W-450_oyvumx.webp" alt="Lead Guru Logo" class="logo">
+            <div class="slide-number">05</div>
+        </div>
+        <div class="section-title">Strategic Keyword Opportunity Matrix</div>
+        
+        <div class="tier-box" style="border-color: #e74c3c; background: rgba(231, 76, 60, 0.2);">
+            <div class="tier-title" style="color: #e74c3c;">🔴 CRITICAL: Branded Defense (Immediate Action Required)</div>
+            <div style="font-size: 13px;">
+                <strong>Keywords:</strong> "cocoon sofa bed" (115/mo, rank 21), "cocoon sofa beds" (115/mo, rank 18), "cocoon bed" (60/mo, rank 14), "cocoon discount code" (230/mo, rank 1)<br>
+                <strong>Problem:</strong> Your own brand terms ranking poorly - competitors stealing your traffic!<br>
+                <strong>Action:</strong> Launch dedicated brand campaign TODAY with 35% of budget<br>
+                <strong>Expected Impact:</strong> 400+ monthly branded searches captured, sub-£5 CPA<br>
+                <strong>Revenue Opportunity:</strong> £120,000+ annual revenue being lost to competitors on YOUR brand
+            </div>
+        </div>
+
+        <div class="tier-box">
+            <div class="tier-title">Tier 1 - High-Intent "Best" & Problem-Solution Keywords (Scale & Convert)</div>
+            <div style="font-size: 13px;">
+                <strong>Keywords:</strong> "best sofa beds for everyday use" (60/mo), "comfortable sofa beds everyday use" (90/mo), "sofa bed for everyday use" (60/mo), "best uk sofa bed" (46/mo)<br>
+                <strong>Strategy:</strong> These are people READY to buy, researching best options - high intent, ready to convert<br>
+                <strong>Action:</strong> Create dedicated high-intent campaign, 30% of budget<br>
+                <strong>Expected CPC:</strong> £0.50-0.70 | <strong>Expected CVR:</strong> 0.80%+ (pain point match)
+            </div>
+        </div>
+
+        <div class="tier-box" style="border-color: #2196F3; background: rgba(33, 150, 243, 0.2);">
+            <div class="tier-title" style="color: #2196F3;">Tier 2 - High Volume Competitive Terms (Quality Score Battle)</div>
+            <div style="font-size: 13px;">
+                <strong>Keywords:</strong> "single sofa bed" (3,300/mo, £0.94 CPC, 2,300 clicks), "sofa bed ikea" (3,100/mo, £0.86 CPC)<br>
+                <strong>Strategy:</strong> Massive volume but competitive - need superior Quality Score to win at affordable CPC<br>
+                <strong>Action:</strong> Build dedicated landing pages for each, improve ad relevance, 25% of budget<br>
+                <strong>Opportunity:</strong> 5,500 monthly searches, 4,500 available clicks if you can compete
+            </div>
+        </div>
+
+        <div class="two-column" style="margin-top: 30px;">
+            <div>
+                <div class="section-title" style="font-size: 1.4em;">Keyword Priority Matrix</div>
+                <div class="data-table">
+                    <table>
+                        <tr><th>Keyword Type</th><th>Volume</th><th>Priority</th></tr>
+                        <tr style="background: rgba(231, 76, 60, 0.3);"><td><strong>Brand Defense</strong></td><td>400/mo</td><td style="color: #e74c3c;"><strong>CRITICAL</strong></td></tr>
+                        <tr><td>High-Intent "Best"</td><td>300/mo</td><td style="color: #4CAF50;"><strong>HIGH</strong></td></tr>
+                        <tr><td>Volume Competitive</td><td>5,500/mo</td><td style="color: #FFC107;">MEDIUM</td></tr>
+                        <tr><td>Long-Tail Specific</td><td>1,000/mo</td><td style="color: #2196F3;">TESTING</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div class="section-title" style="font-size: 1.4em;">Top Opportunities</div>
+                <ul class="bullet-points">
+                    <li><strong>Immediate Win:</strong> Capture 400 branded searches (£40K annual revenue)</li>
+                    <li><strong>Quick Growth:</strong> Target "everyday use" keywords (high intent, lower CPC)</li>
+                    <li><strong>Volume Play:</strong> Compete on "single sofa bed" with better Quality Score</li>
+                    <li><strong>Defensive:</strong> Block competitors on your brand terms</li>
+                    <li><strong>Expansion:</strong> "Best sofa beds uk 2025" seasonal opportunity</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Customer Pain Points -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://res.cloudinary.com/dcnabm5nc/image/upload/v1754585626/lead-guru-new-logo-W-450_oyvumx.webp" alt="Lead Guru Logo" class="logo">
+            <div class="slide-number">06</div>
+        </div>
+        <div class="section-title">Customer Pain Point Analysis & Ad Messaging Strategy</div>
+        
+        <div class="three-column">
+            <div class="competitor-section">
+                <h4 style="color: #e74c3c; margin-bottom: 15px;">🔥 Urgent/Life-Altering Pains</h4>
+                <div style="font-size: 12px; line-height: 1.6;">
+                    <strong style="color: #e74c3c;">Health & Comfort:</strong><br>
+                    • "Exhausted from poor sleep every night"<br>
+                    • "Back pain from terrible mattress"<br>
+                    • "Can't go on like this - need real sleep"<br><br>
+                    
+                    <strong style="color: #e74c3c;">Financial Fear:</strong><br>
+                    • "Can't afford replacing cheap furniture again"<br>
+                    • "Terrified of £1,500 mistake"<br>
+                    • "Wasted money on failed furniture"<br><br>
+                    
+                    <strong>Ad Messaging:</strong><br>
+                    ✓ "Sleep Comfortably Every Night - Finally"<br>
+                    ✓ "Built to Last 10+ Years - No More Replacements"<br>
+                    ✓ "100-Night Home Trial - Zero Risk"<br>
+                    ✓ "Stop Waking Up with Back Pain"
+                </div>
+            </div>
+            
+            <div class="competitor-section">
+                <h4 style="color: #FFC107; margin-bottom: 15px;">💭 Emotional/Social Pains</h4>
+                <div style="font-size: 12px; line-height: 1.6;">
+                    <strong style="color: #FFC107;">Social Anxiety:</strong><br>
+                    • "Embarrassed when guests see sagging sofa"<br>
+                    • "Want something unique, not IKEA generic"<br>
+                    • "Tired of mismatched décor"<br><br>
+                    
+                    <strong style="color: #FFC107;">Decision Paralysis:</strong><br>
+                    • "Overwhelmed by too many options"<br>
+                    • "Feel guilty spending so much"<br>
+                    • "Worried I'll regret my choice"<br><br>
+                    
+                    <strong>Ad Messaging:</strong><br>
+                    ✓ "British Design - Stand Out from the Crowd"<br>
+                    ✓ "3 Simple Options - No Overwhelm"<br>
+                    ✓ "Quality Without the Premium Price"<br>
+                    ✓ "10,000+ Happy UK Customers"
+                </div>
+            </div>
+            
+            <div class="competitor-section">
+                <h4 style="color: #2196F3; margin-bottom: 15px;">🤔 Trust/Uncertainty Pains</h4>
+                <div style="font-size: 12px; line-height: 1.6;">
+                    <strong style="color: #2196F3;">Product Confidence:</strong><br>
+                    • "Can't test/feel product online - risky"<br>
+                    • "Pictures lie - what's it really like?"<br>
+                    • "Will quality claims be true?"<br><br>
+                    
+                    <strong style="color: #2196F3;">Service Fears:</strong><br>
+                    • "What if delivery damages my walls?"<br>
+                    • "Will customer service actually help?"<br>
+                    • "Hidden costs in fine print?"<br><br>
+                    
+                    <strong>Ad Messaging:</strong><br>
+                    ✓ "4.8★ from 10,000+ Reviews - Real Customers"<br>
+                    ✓ "Free Delivery & Professional Assembly"<br>
+                    ✓ "Made in Britain - Quality Guaranteed"<br>
+                    ✓ "100-Night Trial - Free Returns"
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top: 25px;">
+            <h3>Winning Ad Copy Formula</h3>
+            <div style="text-align: left; font-size: 14px; margin-top: 15px;">
+                <strong>Headline 1:</strong> [Pain Point] - Stop [Negative] & Start [Positive]<br>
+                Example: "Stop Waking with Back Pain - Sleep Comfortably Every Night"<br><br>
+                
+                <strong>Headline 2:</strong> [Unique Value Prop] - [Proof/Trust Signal]<br>
+                Example: "British Craftsmanship - 4.8★ from 10,000+ Customers"<br><br>
+                
+                <strong>Description:</strong> [Benefit] + [Risk Reversal] + [Call to Action]<br>
+                Example: "Sofa beds comfortable enough for everyday use. 100-night home trial, free returns. Built to last 10+ years. Shop award-winning designs."<br><br>
+                
+                <strong>Extensions:</strong> "Free Delivery | 100-Night Trial | British Made | 10 Year Warranty"
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Transformation Roadmap -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://res.cloudinary.com/dcnabm5nc/image/upload/v1754585626/lead-guru-new-logo-W-450_oyvumx.webp" alt="Lead Guru Logo" class="logo">
+            <div class="slide-number">07</div>
+        </div>
+        <div class="section-title">90-Day Transformation Roadmap: From Crisis to Profitability</div>
+        
+        <div class="performance-table">
+            <table>
+                <tr>
+                    <th>Performance Metrics</th>
+                    <th class="current">Current (Crisis)</th>
+                    <th class="month1">Month 1 (Stabilized)</th>
+                    <th class="month3">Month 3 (Optimized)</th>
+                </tr>
+                <tr>
+                    <td><strong>Monthly Budget</strong></td>
+                    <td>£5,443</td>
+                    <td>£5,988</td>
+                    <td>£9,253</td>
+                </tr>
+                <tr>
+                    <td><strong>CTR</strong></td>
+                    <td style="color: #e74c3c;">1.11%</td>
+                    <td>2.50%</td>
+                    <td>4.50%</td>
+                </tr>
+                <tr>
+                    <td><strong>Avg CPC</strong></td>
+                    <td>£0.14</td>
+                    <td>£0.10</td>
+                    <td>£0.08</td>
+                </tr>
+                <tr>
+                    <td><strong>Clicks</strong></td>
+                    <td>39,167</td>
+                    <td>57,444</td>
+                    <td>110,972</td>
+                </tr>
+                <tr>
+                    <td><strong>CVR (ATC Rate)</strong></td>
+                    <td style="color: #e74c3c;">0.12%</td>
+                    <td>0.25%</td>
+                    <td>0.40%</td>
+                </tr>
+                <tr>
+                    <td><strong>Conversions (ATC)</strong></td>
+                    <td style="color: #e74c3c;">47</td>
+                    <td>144</td>
+                    <td>444</td>
+                </tr>
+                <tr>
+                    <td><strong>CPA</strong></td>
+                    <td style="color: #e74c3c;">£109.65</td>
+                    <td>£41.58</td>
+                    <td>£20.84</td>
+                </tr>
+                <tr style="background: rgba(76, 175, 80, 0.2);">
+                    <td><strong>Sales (70% close)</strong></td>
+                    <td>33</td>
+                    <td>101</td>
+                    <td>311</td>
+                </tr>
+                <tr style="background: rgba(76, 175, 80, 0.2);">
+                    <td><strong>Cost per Sale</strong></td>
+                    <td style="color: #e74c3c;">£165.45</td>
+                    <td>£59.28</td>
+                    <td>£29.75</td>
+                </tr>
+                <tr style="background: rgba(76, 175, 80, 0.2);">
+                    <td><strong>Revenue (£3,010 LTV)</strong></td>
+                    <td>£39,463</td>
+                    <td>£304,052</td>
+                    <td>£936,241</td>
+                </tr>
+                <tr style="background: rgba(76, 175, 80, 0.2);">
+                    <td><strong>Profit (13% margin)</strong></td>
+                    <td>£5,130</td>
+                    <td>£39,527</td>
+                    <td>£121,711</td>
+                </tr>
+                <tr style="background: rgba(76, 175, 80, 0.2);">
+                    <td><strong>ROAS</strong></td>
+                    <td>7.25X</td>
+                    <td style="color: #4CAF50; font-weight: bold;">50.78X</td>
+                    <td style="color: #4CAF50; font-weight: bold;">101.18X</td>
+                </tr>
+                <tr style="background: rgba(76, 175, 80, 0.2);">
+                    <td><strong>ROI</strong></td>
+                    <td>94%</td>
+                    <td style="color: #4CAF50; font-weight: bold;">660%</td>
+                    <td style="color: #4CAF50; font-weight: bold;">1,315%</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card" style="border-color: #4CAF50;">
+                <span class="stat-number" style="color: #4CAF50;">81%</span>
+                <div class="stat-label">CPA Improvement<br>(Month 3 vs Current)</div>
+            </div>
+            <div class="stat-card" style="border-color: #2196F3;">
+                <span class="stat-number" style="color: #2196F3;">845%</span>
+                <div class="stat-label">Conversion Volume Growth<br>(47 → 444)</div>
+            </div>
+            <div class="stat-card" style="border-color: #FF9800;">
+                <span class="stat-number" style="color: #FF9800;">233%</span>
+                <div class="stat-label">CVR Improvement<br>(0.12% → 0.40%)</div>
+            </div>
+            <div class="stat-card" style="border-color: #E91E63;">
+                <span class="stat-number" style="color: #E91E63;">2,272%</span>
+                <div class="stat-label">Profit Growth<br>(£5K → £122K)</div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>The Transformation Journey</h3>
+            <p><strong>Current Crisis:</strong> £109.65 CPA (4X breakeven), losing money, 0.12% CVR disaster<br>
+            <strong>Month 1 Stabilization:</strong> £41.58 CPA (profitable), 0.25% CVR, 206% more conversions<br>
+            <strong>Month 3 Optimization:</strong> £20.84 CPA (highly profitable), 0.40% CVR, 845% more conversions<br><br>
+            
+            <strong>Annual Impact:</strong> From £61K profit/year → £1.46M profit/year = 2,294% improvement</p>
+        </div>
+    </div>
+
+    <!-- Slide 8: Implementation Plan -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://res.cloudinary.com/dcnabm5nc/image/upload/v1754585626/lead-guru-new-logo-W-450_oyvumx.webp" alt="Lead Guru Logo" class="logo">
+            <div class="slide-number">08</div>
+        </div>
+        <div class="section-title">Implementation Plan: Week-by-Week Action Plan</div>
+        
+        <div class="roi-visual">
+            <div class="roi-box">
+                <h4>Week 1-2</h4>
+                <div style="font-weight: bold; margin: 10px 0;">EMERGENCY FIXES</div>
+                <div style="font-size: 12px; text-align: left;">
+                    <strong>Campaign Structure:</strong><br>
+                    • Launch brand defense campaign (35% budget)<br>
+                    • Separate high-intent keywords (30% budget)<br>
+                    • Pause lowest performers immediately<br><br>
+                    
+                    <strong>Landing Pages:</strong><br>
+                    • Fix mobile experience (critical)<br>
+                    • Add trust signals (reviews, guarantees)<br>
+                    • Clear CTA above fold<br>
+                    • Remove friction points<br><br>
+                    
+                    <strong>Expected: 0.20% CVR</strong>
+                </div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="roi-box">
+                <h4>Week 3-4</h4>
+                <div style="font-weight: bold; margin: 10px 0;">OPTIMIZATION</div>
+                <div style="font-size: 12px; text-align: left;">
+                    <strong>Ad Copy:</strong><br>
+                    • Pain-point focused headlines<br>
+                    • Trust signals in descriptions<br>
+                    • All extensions activated<br><br>
+                    
+                    <strong>Targeting:</strong><br>
+                    • Add 200+ negative keywords<br>
+                    • Tighten match types<br>
+                    • Audience layering<br><br>
+                    
+                    <strong>Tracking:</strong><br>
+                    • Enhanced conversion tracking<br>
+                    • Attribution setup<br><br>
+                    
+                    <strong>Expected: 0.25% CVR</strong>
+                </div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="roi-box">
+                <h4>Week 5-8</h4>
+                <div style="font-weight: bold; margin: 10px 0;">SCALING</div>
+                <div style="font-size: 12px; text-align: left;">
+                    <strong>Budget:</strong><br>
+                    • Increase top performers 20%<br>
+                    • Kill bottom 20% of keywords<br>
+                    • Launch DSA campaign<br><br>
+                    
+                    <strong>Testing:</strong><br>
+                    • A/B test landing pages<br>
+                    • New ad variations<br>
+                    • Audience expansion<br><br>
+                    
+                    <strong>Quality Score:</strong><br>
+                    • Improve to 7+ across board<br><br>
+                    
+                    <strong>Expected: 0.30% CVR</strong>
+                </div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="roi-box">
+                <h4>Week 9-12</h4>
+                <div style="font-weight: bold; margin: 10px 0;">DOMINATION</div>
+                <div style="font-size: 12px; text-align: left;">
+                    <strong>Full Optimization:</strong><br>
+                    • Smart Bidding enabled<br>
+                    • Responsive search ads scaled<br>
+                    • Remarketing lists active<br><br>
+                    
+                    <strong>Expansion:</strong><br>
+                    • Shopping campaigns<br>
+                    • YouTube consideration<br>
+                    • Display retargeting<br><br>
+                    
+                    <strong>Efficiency:</strong><br>
+                    • CPA under £25<br>
+                    • CVR stable 0.35-0.40%<br><br>
+                    
+                    <strong>Expected: 0.40% CVR</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-column" style="margin-top: 30px;">
+            <div>
+                <div class="section-title" style="font-size: 1.4em;">Critical Success Factors</div>
+                <ul class="bullet-points">
+                    <li><strong>Landing Page Fix:</strong> #1 priority - 0.12% CVR is catastrophic</li>
+                    <li><strong>Brand Defense:</strong> Stop bleeding 400 monthly branded searches</li>
+                    <li><strong>Negative Keywords:</strong> Stop waste on irrelevant traffic</li>
+                    <li><strong>Campaign Segmentation:</strong> Separate winners from losers</li>
+                    <li><strong>Mobile Optimization:</strong> Likely where 0.12% CVR is failing</li>
+                    <li><strong>Trust Signals:</strong> Reviews, guarantees, proof points</li>
+                </ul>
+            </div>
+            <div>
+                <div class="section-title" style="font-size: 1.4em;">Budget Allocation (Month 1)</div>
+                <div class="data-table">
+                    <table>
+                        <tr><th>Campaign Type</th><th>Budget %</th><th>Amount</th></tr>
+                        <tr><td>Brand Defense</td><td>35%</td><td>£2,096</td></tr>
+                        <tr><td>High-Intent "Best"</td><td>30%</td><td>£1,796</td></tr>
+                        <tr><td>Volume Generic</td><td>25%</td><td>£1,497</td></tr>
+                        <tr><td>Testing & Expansion</td><td>10%</td><td>£599</td></tr>
+                        <tr style="background: rgba(204, 91, 39, 0.3);"><td><strong>TOTAL</strong></td><td><strong>100%</strong></td><td><strong>£5,988</strong></td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Financial Projections -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="https://res.cloudinary.com/dcnabm5nc/image/upload/v1754585626/lead-guru-new-logo-W-450_oyvumx.webp" alt="Lead Guru Logo" class="logo">
+            <div class="slide-number">09</div>
+        </div>
+        <div class="section-title">12-Month Financial Impact Projections</div>
+        
+        <div class="performance-table">
+            <table>
+                <tr>
+                    <th>Quarter</th>
+                    <th>Ad Spend</th>
+                    <th>Conversions</th>
+                    <th>Sales</th>
+                    <th>Revenue</th>
+                    <th>Profit</th>
+                    <th>ROI</th>
+                </tr>
+                <tr>
+                    <td><strong>Q1 2026</strong></td>
+                    <td>£24,378</td>
+                    <td>948</td>
+                    <td>664</td>
+                    <td>£1,998,917</td>
+                    <td>£259,859</td>
+                    <td style="color: #4CAF50;"><strong>1,066%</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Q2 2026</strong></td>
+                    <td>£27,760</td>
+                    <td>1,332</td>
+                    <td>933</td>
+                    <td>£2,808,722</td>
+                    <td>£365,134</td>
+                    <td style="color: #4CAF50;"><strong>1,315%</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Q3 2026</strong></td>
+                    <td>£27,760</td>
+                    <td>1,332</td>
+                    <td>933</td>
+                    <td>£2,808,722</td>
+                    <td>£365,134</td>
+                    <td style="color: #4CAF50;"><strong>1,315%</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Q4 2026</strong></td>
+                    <td>£27,760</td>
+                    <td>1,332</td>
+                    <td>933</td>
+                    <td>£2,808,722</td>
+                    <td>£365,134</td>
+                    <td style="color: #4CAF50;"><strong>1,315%</strong></td>
+                </tr>
+                <tr style="background: rgba(204, 91, 39, 0.3);">
+                    <td><strong>ANNUAL TOTAL</strong></td>
+                    <td><strong>£107,658</strong></td>
+                    <td><strong>4,944</strong></td>
+                    <td><strong>3,463</strong></t
